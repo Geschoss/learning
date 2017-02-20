@@ -50,7 +50,7 @@
 	for(var i = 0; i < 10; i++) {
 	    (function(e) {
         	setTimeout(function() {
-            	console.log(e);
+            	//console.log(e);
         	}, 1000);
     	}).call(null, i);
 	}
