@@ -12,6 +12,7 @@
 	  return Object.prototype.toString.call(obj).slice(8, -1);
 	};
 
+	console.log("_toString: ",getTypeString({}));
 	console.log("_toString: ",_toString({}));     
 	console.log("_toString: ",_toString(window)); 
 	console.log("_toString: ",_toString([]));     

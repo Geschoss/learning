@@ -1,7 +1,6 @@
 (function(window, undefined){
 	"use strict";
-	console.clear();
-	console.log("array");
+	console.log("<!-----------------array----------------->");
 
 
 	let years = [1950, 1960, 1970, 1980, 1990, 2000, 2010];
