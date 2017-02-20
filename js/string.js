@@ -20,6 +20,8 @@
 	console.log("Символ по индексу 5   равен '" + anyString.charAt(5)   + "'");
 	console.log("Символ по индексу 999 равен '" + anyString.charAt(999) + "'");
 
-
+	//concat
+	let concatStr = 'Hello, ';
+	console.log(concatStr.concat('Kavin', ', nice day'));
 
 }(this))
