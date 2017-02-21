@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<script type="text/javascript" src="rx.all.js"></script>
+	</head>
+<body>
+<button id="btnStart">Start</button>
+<button id="btnHalf">Half</button>
+<button id="btnQuarter">Quarter</button>
+<button id="btnReset">Reset</button>
+<button id="btnStop">Stop</button>
+
+<hr>
+<input type="text" id="input">
+<div>Score: <span id="score"></span> </div>
+
+<script>
+	let startButton 	= document.querySelector("#btnStart");
+	let stopButton 		= document.querySelector("#btnStop");
+	let resetButton 	= document.querySelector("#btnReset");
+	let halfButton 		= document.querySelector("#btnHalf");
+	let quarterButton 	= document.querySelector("#btnQuarter");
+	let input 			= document.querySelector("#input");
+	let score 			= document.querySelector("#score");
+
+	let sourceStart$ 	= Rx.Observable.fromEvent(startButton, 'click');
+	let sourceStop$ 	= Rx.Observable.fromEvent(stopButton, 'click');
+	let sourceReset$ 	= Rx.Observable.fromEvent(resetButton, 'click');
+	let sourceQuarter$ 	= Rx.Observable.fromEvent(quarterButton, 'click');
+	let sourceHalf$ 	= Rx.Observable.fromEvent(halfButton, 'click');
+	let interval$ 		= Rx.Observable.interval(1000);
+	let input$	= Rx.Observable.fromEvent(input, 'input')
+								.map(event => event.target.value);
+
+	let intervalThatStops$ = interval$
+	.takeUntil(sourceStop$);
+
+</script>
+<script>
+	
+	const data 	= {count: 0};
+	const inc 	= (acc) => ({count: acc.count + 1});
+	const reset = (acc) => data;
+
+	const incOrReset$ = Rx.Observable.merge(
+		intervalThatStops$.map(() => inc),
+		sourceReset$.map(() => reset)
+	);
+
+
+	const starter$ = Rx.Observable.merge(
+			sourceStart$.map(() => 1000),
+			sourceHalf$.map(() 	=> 500),
+			sourceQuarter$.map(() => 250)
+		);
+	const intervalActions = (time) =>  Rx.Observable.merge(
+		Rx.Observable.interval(time)
+		.takeUntil(sourceStop$).map(() => inc),
+		sourceReset$.map(() => reset));
+		
+
+	const timer$ = starter$
+	.switchMap(intervalActions)
+	.startWith(data)
+	.scan((acc, curr) => curr(acc))
+
+
+	timer$
+	.do((x) => console.log(x))
+	.takeWhile((data)=> data.count <= 3)
+	.withLatestFrom(
+		input$.do((x) => console.log(x)),
+		(timer, input)=> ({count: timer.count, text: input}))
+	.filter((data) => data.count === parseInt(data.text))
+	.reduce((acc, curr)=> acc+1,0)
+	.repeat()
+	.subscribe(
+		(x)=> score.innerHTML = `${x}`,
+		(err) => console.log(err),
+		() => console.log("complete")
+		);
+
+
+</script>
+</body>
+</html>
