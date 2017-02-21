@@ -24,4 +24,24 @@
 	let concatStr = 'Hello, ';
 	console.log(concatStr.concat('Kavin', ', nice day'));
 
+
+	//indexOf
+	'Голубой кит'.indexOf('кит', 0); 
+	//slice
+	let str1 = 'Приближается утро.';
+	let str2 = str1.slice(4, -1);
+	console.log(str2);
+
+	//split
+	let names = 'Гарри Трамп ;Фрэд Барни; Хелен Ригби ; Билл Абель ;Крис Ханд ';
+	let re = /\s*;\s*/;
+	let nameList = names.split(re);
+	console.log(nameList);
+
+	//substr
+	let str1substr = 'Приближается утро.';
+	let str2substr = str1substr.substr(4, -1);
+	console.log(str2);
+
+	
 }(this))
