@@ -13,7 +13,8 @@
 <hr>
 <input type="text" id="input">
 <div>Score: <span id="score"></span> </div>
-
+<hr>
+<button id="switchMap">Button</button>
 <script>
 	let startButton 	= document.querySelector("#btnStart");
 	let stopButton 		= document.querySelector("#btnStop");
@@ -22,22 +23,25 @@
 	let quarterButton 	= document.querySelector("#btnQuarter");
 	let input 			= document.querySelector("#input");
 	let score 			= document.querySelector("#score");
+	let switchMapButton	= document.querySelector("#switchMap");
 
-	let sourceStart$ 	= Rx.Observable.fromEvent(startButton, 'click');
-	let sourceStop$ 	= Rx.Observable.fromEvent(stopButton, 'click');
-	let sourceReset$ 	= Rx.Observable.fromEvent(resetButton, 'click');
-	let sourceQuarter$ 	= Rx.Observable.fromEvent(quarterButton, 'click');
-	let sourceHalf$ 	= Rx.Observable.fromEvent(halfButton, 'click');
+	let sourceStart$ 		= Rx.Observable.fromEvent(startButton, 'click');
+	let sourceStop$ 		= Rx.Observable.fromEvent(stopButton, 'click');
+	let sourceReset$ 		= Rx.Observable.fromEvent(resetButton, 'click');
+	let sourceQuarter$ 		= Rx.Observable.fromEvent(quarterButton, 'click');
+	let sourceHalf$ 		= Rx.Observable.fromEvent(halfButton, 'click');
+	let sourceSwitchMap$	= Rx.Observable.fromEvent(switchMapButton, 'click');
+
 	let interval$ 		= Rx.Observable.interval(1000);
-	let input$	= Rx.Observable.fromEvent(input, 'input')
+	let input$			= Rx.Observable.fromEvent(input, 'input')
 								.map(event => event.target.value);
 
 	let intervalThatStops$ = interval$
-	.takeUntil(sourceStop$);
+		.takeUntil(sourceStop$);
 
 </script>
 <script>
-	
+
 	const data 	= {count: 0};
 	const inc 	= (acc) => ({count: acc.count + 1});
 	const reset = (acc) => data;
@@ -57,7 +61,7 @@
 		Rx.Observable.interval(time)
 		.takeUntil(sourceStop$).map(() => inc),
 		sourceReset$.map(() => reset));
-		
+
 
 	const timer$ = starter$
 	.switchMap(intervalActions)
@@ -81,6 +85,13 @@
 		);
 
 
+	sourceSwitchMap$
+		.switchMap(interval$)
+		.subscribe(x => console.log(x));
+
 </script>
+<style type="text/css">
+
+</style>
 </body>
 </html>
