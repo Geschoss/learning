@@ -7,5 +7,89 @@
 </body>
 <script>
 "use strict"
+let a = ['a','b','c'];
+
+Array.prototype.mypop = function() {
+    return this.splice(this.length - 1, 1)[0];
+}
+
+let c = a.mypop();
+console.log(c);
+
+
+Function.prototype.mybind = function(that) {
+    let method = this,
+        slice = Array.prototype.slice,
+        args = slice.apply(arguments, [1]);
+
+    return function() {
+        return method.apply(that, slice.apply(arguments,[0]));
+    }
+
+};
+
+let x =  function(x,y) {
+    return this.value + x + y;
+}.mybind({value: 666});
+
+console.log(x(5, 6));
+
+
+let DataSource = function() {
+    let i = 0,
+        _this = this;
+
+    _this.emit = function (n) {
+                    const limit = 10;
+                    if(_this.ondata){
+                        _this.ondata(n);
+                    }
+                    if(n === limit) {
+                        if(_this.oncomplete){
+                            _this.oncomplete();
+                        }
+                        _this.destroy();
+                    }
+                };
+    _this.destroy =  function() {
+                        clearInterval(_this.id);
+                    };
+
+    _this.id = setInterval(function() {
+                    return _this.emit(i++);
+                }, 200);
+
+    return _this;
+};
+
+function myObservable(observer) {
+  let datasource = new DataSource();
+  datasource.ondata = function (e) {
+    return observer.next(e);
+  };
+  datasource.onerror = function (err) {
+    return observer.error(err);
+  };
+  datasource.oncomplete = function () {
+    return observer.complete();
+  };
+  return function () {
+    datasource.destroy();
+  };
+};
+
+let unsub = myObservable({
+  next: function next(x) {
+    console.log(x);
+  },
+  error: function error(err) {
+    console.error(err);
+  },
+  complete: function complete() {
+    console.log('done');
+  }
+});
+
+</script>
 </html>
 
