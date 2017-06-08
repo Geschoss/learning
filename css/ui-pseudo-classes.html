@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+  <style>
+    body div:first-child {
+      color: #b00;
+      font-style: italic;
+      text-decoration: underline;
+    }
+    .block {
+      border: 2px solid black;
+      margin: 2px;
+    }
+
+    tr:first-child,
+    tr:last-child {
+      font-weight: bold;
+    }
+    tr:first-of-type,
+    tr:last-of-type {
+      text-decoration:line-through;
+    }
+    tr:nth-child(even) {
+      background-color:#CCC;
+    }
+    tr:nth-child(3) {
+      color:#CCC;
+    }
+    tr:nth-of-type(odd) {
+      background-color:#FFF;
+    }
+    tr:nth-of-type(4n) {
+      color:#C61800;
+    }
+    tr:nth-of-type(3n-1) {
+      font-style: italic;
+    }
+
+    .inline li {
+        display: inline;
+        background: red;
+        margin: 2px;
+    }
+
+    li:first-of-type:last-of-type{width:100%; background-color: green;}
+  </style>
+<body>
+  <div class="block">
+    <h1>This is a H1</h1>
+    <p>Some random text</p>
+    <p>Some random text</p>
+    <p>Some random text</p>
+  </div>
+  <div class="block">
+    <p>We put a paragraph before the h1</p>
+    <h1>This is an H1</h1>
+    <p>Some random text</p>
+    <h2>This is an h2</h2>
+    <p>Some random text</p>
+    <h2>this is another h2</h2>
+    <p>Some random text</p>
+  </div>
+  <div class="block">
+    <h1>This is the 3rd h1</h1>
+    <p>Some random text</p>
+    <h2>Look, an H2, Lol evryfink comperwters loike wut</h2>
+    <p>Some random text</p>
+    <h3>this is another h3</h3>
+    <p>Some random text</p>
+  </div>
+  <div class="block">
+    <h1>Only h1 in an otherwise empty div</h1>
+  </div>
+  <div class="block">
+    <p>test</p>
+  <table>
+    <tr><td>Row 1</td></tr>
+    <tr><td>Row 2</td></tr>
+    <tr><td>Row 3</td></tr>
+    <tr><td>Row 4</td></tr>
+    <tr><td>Row 5</td></tr>
+    <tr><td>Row 6</td></tr>
+    <tr><td>Row 7</td></tr>
+    <tr><td>Row 8</td></tr>
+    <tr><td>Row 9</td></tr>
+    <tr><td>Row 10</td></tr>
+    </table>
+  </div>
+
+  <div class="block">
+    <ul class="inline">
+      <li>test</li>
+    </ul>
+    <ul class="inline">
+      <li>test</li>
+      <li>test</li>
+    </ul>
+    <ul class="inline">
+      <li>test</li>
+      <li>test</li>
+      <li>test</li>
+    </ul>
+    <ul class="inline">
+      <li>test</li>
+      <li>test</li>
+      <li>test</li>
+      <li>test</li>
+    </ul>
+  </div>
+</body>
+</html>
